@@ -1,0 +1,42 @@
+﻿Build started 2012/2/23 21:20:28.
+     1>Project "I:\VS2010\Projects\CityLampServer\CityLampServer\CityLampServer.vcxproj" on node 2 (build target(s)).
+     1>C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(298,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
+     1>C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>InitializeBuildStatus:
+         Creating "Release\CityLampServer.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         F:\win7\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D _WINDOWS /D STRICT /D NDEBUG /D _UNICODE /D UNICODE /Gm- /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Release\CityLampServer.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+     1>F:\win7\Microsoft Visual Studio 10.0\VC\include\xlocale(323): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+         F:\win7\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D _WINDOWS /D STRICT /D NDEBUG /D _UNICODE /D UNICODE /Gm- /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Release\CityLampServer.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt AboutDlg.cpp CityLamp.cpp CityLampServer.cpp MainDlg.cpp PCClient.cpp SettingDlg.cpp
+         AboutDlg.cpp
+         CityLamp.cpp
+     1>CityLamp.cpp(141): warning C4309: '=' : truncation of constant value
+         CityLampServer.cpp
+     1>CityLampServer.cpp(290): warning C4800: 'BOOL' : forcing value to bool 'true' or 'false' (performance warning)
+         MainDlg.cpp
+         PCClient.cpp
+         SettingDlg.cpp
+         Generating Code...
+       ResourceCompile:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D NDEBUG /D _UNICODE /D UNICODE /l"0x0409" /IRelease\ /nologo /fo"Release\CityLampServer.res" CityLampServer.rc 
+       Link:
+         F:\win7\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Release\CityLampServer.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\CityLampServer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"I:\VS2010\Projects\CityLampServer\CityLampServer\Release\CityLampServer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Release\CityLampServer.lib" /MACHINE:X86 Release\CityLampServer.res
+         Release\AboutDlg.obj
+         Release\CityLamp.obj
+         Release\CityLampServer.obj
+         Release\MainDlg.obj
+         Release\PCClient.obj
+         Release\SettingDlg.obj
+         Release\stdafx.obj
+         CityLampServer.vcxproj -> I:\VS2010\Projects\CityLampServer\CityLampServer\Release\CityLampServer.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"Release\CityLampServer.exe;#1" /manifest Release\CityLampServer.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\CityLampServer.unsuccessfulbuild".
+         Touching "Release\CityLampServer.lastbuildstate".
+     1>Done Building Project "I:\VS2010\Projects\CityLampServer\CityLampServer\CityLampServer.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:27.21
