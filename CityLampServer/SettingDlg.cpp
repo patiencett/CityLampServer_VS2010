@@ -59,7 +59,6 @@ LRESULT CSettingDlg::OnOkCmd(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, B
 			RestartServer();
 		}
 	}
-
 	EndDialog(wID);
 	return 0;
 }
