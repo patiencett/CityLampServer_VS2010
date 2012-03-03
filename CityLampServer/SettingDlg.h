@@ -23,7 +23,7 @@ public:
 	BEGIN_DDX_MAP(CSettingDlg)
 		//DDX_TEXT(IDC_COMBOIPLIST, ServerIpAddress)
 		DDX_COMBO_INDEX(IDC_COMBOIPLIST, IpIndex)
-		DDX_INT(IDC_EDITPORT, ServerPort)
+		DDX_INT_RANGE(IDC_EDITPORT, ServerPort, MINPORT, MAXPORT)
 		DDX_CHECK(IDC_CHECKMINIMUM, bHideWindow)
 	END_DDX_MAP()
 	// Handler prototypes (uncomment arguments if needed):

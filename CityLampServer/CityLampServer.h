@@ -9,6 +9,9 @@
 
 #define MAXBUFSIZE 1024
 
+const u_short MINPORT = 1;
+const u_short MAXPORT = 65535;
+
 class PCClient;
 class CityLamp;
 
