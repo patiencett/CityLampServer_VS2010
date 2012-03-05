@@ -29,6 +29,7 @@ HANDLE completionPort = INVALID_HANDLE_VALUE;
 bool bHideWindow = FALSE;
 
 list<PCClient*> PCClientList;
+list<SOCKET> TempSock;
 CityLamp citylamp;
 Mutex PCClientListMutex;	//提供对PCClientList的互斥访问
 
@@ -179,7 +180,7 @@ DWORD WINAPI Server()
 		struct timeval time_out;
 		FD_ZERO(&fd);
 		FD_SET(sock, &fd);
-		time_out.tv_sec = 20;	//设置超时时间为20s
+		time_out.tv_sec = 30;	//设置超时时间为20s
 		time_out.tv_usec = 0;
 
 		//对于每个新的lamp连接，等待20s接受其发送的消息，若没有收到则关闭连接
@@ -249,7 +250,7 @@ DWORD WINAPI Server()
 				LPLampMutexSockStruct lpLMSS = new LampMutexSockStruct(sock, &addr, lampid, RECV_POSTED);
 				citylamp.SetLampID2LampMutexSockMap(lampid, lpLMSS);
 				UpdateLampListView(true, lampid);
-				
+
 				//将lampsock绑定到完成端口
 				/*
 				LPPER_HANDLE_DATA lpPerHandleData = (LPPER_HANDLE_DATA)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(PER_HANDLE_DATA));
@@ -273,7 +274,6 @@ DWORD WINAPI Server()
 			else
 			{
 				closemysocket(sock);
-				continue;
 			}
 		}
 	}

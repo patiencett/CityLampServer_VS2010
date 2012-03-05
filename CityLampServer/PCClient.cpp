@@ -12,9 +12,10 @@ PCClient::PCClient(SOCKET sock, GUID guid, sockaddr_in &addr) : beAlive(true)
 	PCDataSock = sock;
 	pcid = guid;
 	hostent* phost = gethostbyaddr((const char*)&(addr.sin_addr), sizeof(addr.sin_addr), AF_INET);
-	//sprintf_s(hostname, sizeof(hostname), "%s", phost->h_name);
-	wsprintfW(hostname, L"%hs", phost->h_name);
-	//wsprintfW(hostname, L"%hs", "test");
+	if (phost == nullptr)
+		wsprintfW(hostname, L"%hs", "Unknow");
+	else 
+		wsprintfW(hostname, L"%hs", phost->h_name);
 	pc_addr_in = addr;
 }
 
