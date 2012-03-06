@@ -180,7 +180,7 @@ DWORD WINAPI Server()
 		struct timeval time_out;
 		FD_ZERO(&fd);
 		FD_SET(sock, &fd);
-		time_out.tv_sec = 30;	//设置超时时间为20s
+		time_out.tv_sec = 20;	//设置超时时间为20s
 		time_out.tv_usec = 0;
 
 		//对于每个新的lamp连接，等待20s接受其发送的消息，若没有收到则关闭连接
@@ -220,7 +220,7 @@ DWORD WINAPI Server()
 				HANDLE hThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)PCClientThread, (void *)pc, 0, &ThreadID);
 				if (hThread != 0)
 				{
-					;//MessageBox(NULL, L"PC连接成功", L"Error", MB_OK);
+					CloseHandle(hThread);//MessageBox(NULL, L"PC连接成功", L"Error", MB_OK);
 				}
 			}
 			else if (label[0] == 0x5A)	//节点连接
@@ -247,6 +247,13 @@ DWORD WINAPI Server()
 				SendDataToPCClient(data, len + 1);
 				delete[] data;
 				u_short lampid = *(u_short*)(len_lampid + 1);	//len_lampid[1]和len_lampid[2]表示id的低字节和高字节部分
+				//检查此lampid是否已经存在列表中
+				if (citylamp.QueryLampID(lampid))
+				{
+					closemysocket(sock);
+					continue;
+				}
+
 				LPLampMutexSockStruct lpLMSS = new LampMutexSockStruct(sock, &addr, lampid, RECV_POSTED);
 				citylamp.SetLampID2LampMutexSockMap(lampid, lpLMSS);
 				UpdateLampListView(true, lampid);
@@ -274,6 +281,7 @@ DWORD WINAPI Server()
 			else
 			{
 				closemysocket(sock);
+				continue;
 			}
 		}
 	}
@@ -336,6 +344,9 @@ DWORD WINAPI LampThread()
 
 DWORD WINAPI PCClientThread(void* pc)
 {
+	//首先将当前在线的节点发送给客户端
+	citylamp.SendOnlineCmdToPCClient();
+
 	PCClient* pcclient = (PCClient*)pc;
 
 	pcclient->TransferDataToLamp();
@@ -346,7 +357,6 @@ DWORD WINAPI PCClientThread(void* pc)
 
 	return 1;
 }
-
 void SendDataToPCClient(char *buf, int datalength)
 {
 	{

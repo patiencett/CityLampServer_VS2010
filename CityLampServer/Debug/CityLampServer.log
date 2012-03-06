@@ -1,4 +1,4 @@
-﻿Build started 2012/3/5 14:43:06.
+﻿Build started 2012/3/6 11:48:35.
      1>Project "I:\VS2010\Projects\CityLampServer\CityLampServer\CityLampServer.vcxproj" on node 2 (build target(s)).
      1>C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(298,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
      1>C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
@@ -35,4 +35,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.03
+Time Elapsed 00:00:03.51
