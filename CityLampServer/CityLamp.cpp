@@ -186,6 +186,9 @@ void CityLamp::ClearLampID2LampMutexSockMap(void)
 		delete map_it->second;
 		map_it = LampID2LampMutexSockMap.erase(map_it);
 	}
+	
+	//确保全部删除
+	LampID2LampMutexSockMap.clear();
 	/*
 	while (map_it != LampID2LampMutexSockMap.end())
 	{

@@ -136,21 +136,24 @@ LRESULT CMainDlg::OnStart(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, 
 	return 0;
 }
 
-LRESULT CMainDlg::OnUpdatePCListView(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+LRESULT CMainDlg::OnUpdatePCListView(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
 	hPCList.DeleteAllItems();
-	USES_CONVERSION;
-	char *ip;
-	int i = 0;
+	if (wParam <= 1)
 	{
-		std::wostringstream portstr;
-		MutexGuard guard(PCClientListMutex);
-		for (list<PCClient*>::iterator iter = PCClientList.begin(); iter != PCClientList.end(); ++iter)
+		USES_CONVERSION;
+		char *ip;
+		int i = 0;
 		{
-			ip = inet_ntoa((*iter)->GetPCAddrIn().sin_addr);
-			hPCList.AddItem(i, 0, A2T(ip));
-			hPCList.AddItem(i, 1, (*iter)->GetHostname());
-			++i;
+			std::wostringstream portstr;
+			MutexGuard guard(PCClientListMutex);
+			for (list<PCClient*>::iterator iter = PCClientList.begin(); iter != PCClientList.end(); ++iter)
+			{
+				ip = inet_ntoa((*iter)->GetPCAddrIn().sin_addr);
+				hPCList.AddItem(i, 0, A2T(ip));
+				hPCList.AddItem(i, 1, (*iter)->GetHostname());
+				++i;
+			}
 		}
 	}
 	return 0;
@@ -170,13 +173,17 @@ LRESULT CMainDlg::OnUpdateLampListView(UINT uMsg, WPARAM wParam, LPARAM lParam, 
 		idItem.pszText = str;
 		hLampList.InsertItem(&idItem);
 	}
-	else					//É¾³ýÐÐ
+	else if (wParam == 0)				//É¾³ýÐÐ
 	{
 		LVFINDINFO *pFindInfo = new LVFINDINFO;  
 		pFindInfo->flags = LVFI_PARTIAL|LVFI_STRING;  
 		pFindInfo->psz = str;
 		int nIndex = hLampList.FindItem(pFindInfo, -1);   
 		hLampList.DeleteItem(nIndex);
+	}
+	else
+	{
+		hLampList.DeleteAllItems();
 	}
 	return 0;
 }

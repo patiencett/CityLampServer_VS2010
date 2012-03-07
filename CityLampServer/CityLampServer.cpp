@@ -84,7 +84,6 @@ void StartServer()
 {
 	if (!beRunning)
 	{
-		beRunning = true;
 		DWORD ThreadID;
 		HANDLE hLampServerThread = ::CreateThread(0, 0, (LPTHREAD_START_ROUTINE)Server, NULL, 0, &ThreadID);
 		CloseHandle(hLampServerThread);
@@ -114,10 +113,13 @@ void StopServer()
 		}
 	}
 
+	//等待pcclientthread线程全部终止
 	while (PCClientList.size() > 0 || citylamp.GetLampIDCount() > 0)
 	{
 		Sleep(200);
 	}
+	dlgMain.PostMessageW(WM_UPDATELAMPLIST_MESSAGE, 2, 0);
+	dlgMain.PostMessageW(WM_UPDATEPCLIST_MESSAGE, 2, 0);
 }
 
 void RestartServer()
@@ -128,7 +130,6 @@ void RestartServer()
 
 DWORD WINAPI Server()
 {
-	UpdateServerStatus();
 	SOCKET sock;
 	DWORD ThreadID;
 
@@ -138,11 +139,15 @@ DWORD WINAPI Server()
 	int iSize = sizeof(sockaddr_in);
 
 	server_sock = CreateSocket(LampServerPort, LampServerIpAddress);
-	if (server_sock == INVALID_SOCKET)
+	if (server_sock == INVALID_SOCKET || server_sock == SOCKET_ERROR)
 	{
 		MessageBox(NULL, L"端口被占用", L"Error", MB_OK);
+		beRunning = FALSE;
+		UpdateServerStatus();
 		return false;
 	}
+	beRunning = true;
+	UpdateServerStatus();
 	
 	//创建完成端口句柄
 	completionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, null, 0, 0);
@@ -527,12 +532,15 @@ SOCKET CreateSocket(const int port, struct in_addr ipaddress)
 	server_addr.sin_addr = ipaddress;
 
 	ssock = ::socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
-
+	if (ssock == INVALID_SOCKET)
+	{
+		return INVALID_SOCKET;
+	}
 	ret = ::bind(ssock,(struct sockaddr *)&server_addr,sizeof(server_addr));
-	if(ret != 0) return 0;
+	if(ret != 0) return ret;
 
 	ret = ::listen(ssock, SOMAXCONN);
-	if(ret != 0) return 0;
+	if(ret != 0) return ret;
 	return ssock;
 }
 
